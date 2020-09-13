@@ -76,5 +76,6 @@ int main() {
     cout << "Enter x, y, z for task 3b ";
     cin >> x >> y >> z;
     cout << "The result of task 3b is " << solve_task_3_b(x, y, z) << "\n";
+
     return 0;
 }
