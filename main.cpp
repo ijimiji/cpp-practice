@@ -1,11 +1,10 @@
-#include "stdio.h"
 #include <cmath>
 #include <iostream>
 #include <string>
-#include <iomanip>
 
 using std::cout;
 using std::cin;
+using std::string;
 
 double round(double x, int n) {
     int d = 0;
@@ -15,7 +14,7 @@ double round(double x, int n) {
 }
 
 template<typename Function>
-std::string test_function(double x, double y, double z, double answer, Function func)
+string test_function(double x, double y, double z, double answer, Function func)
 {
     return round(func(x, y, z), 6) == answer ? "Function works correctly" : "Function works incorrectly";
 }
