@@ -45,7 +45,7 @@ double solve_task_2_b(double x, double y, double z) {
 double solve_task_3_a(double x, double y, double z) {
     double part1, part2;
     part1 = 2.0 * tan(x / 2.0);
-    part2 = abs(x) + pow(cos(z), 2) + 1;
+    part2 = 1.0 + 2.0 * cos(3.0 * y) + tan(z / 2.0);
     return part1 / part2;
 }
 double solve_task_3_b(double x, double y, double z) {
