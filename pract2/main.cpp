@@ -1,10 +1,12 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+#include <vector>
 
 using std::cout;
 using std::cin;
 using std::endl;
+using std::string;
 
 template <typename T, typename M>
 int FindDistanceBetweenPoints(T A, M B) {
@@ -107,6 +109,82 @@ int main() {
             double s = sqrt(p * (p - d1) * (p - d2) * (p - d3));
             cout << "S = " << s << endl;
         }
+        break;
+    }
+    case 3: {
+        int number;
+        cout << "Enter your number ";
+        if (!(std::cin >> number)) {
+            cout << "Error. Not valid input for int number." << endl;
+            break;
+        }
+
+        // From the beginning to the end 
+        // For example 123
+        int third_digit = number % 10; // 1
+        int second_digit = number / 10 % 10; // 2
+        int first_digit = number / 100 % 10; // 3
+        cout << first_digit << second_digit << third_digit << endl;
+        string first_pos[] = {
+            "сто",
+            "двести",
+            "триста",
+            "четыреста",
+            "пятьсот",
+            "шестьсот",
+            "семьсот",
+            "восемьсот",
+            "девятьсот"
+        };
+        string sub_second_pos[] = {
+            "одиннадцать",
+            "двенадцать",
+            "тринадцать",
+            "четырнадцать",
+            "пятнадцать",
+            "шестнадцать",
+            "семнадцать",
+            "восемнадцать",
+            "девятнадцать"
+        };
+
+        string second_pos[] = {
+            "двадцать",
+            "тридцать",
+            "сорок",
+            "пятьдесят",
+            "шестьдесят",
+            "семьдесят",
+            "восемьдесят",
+            "девяносто"
+        };
+        string third_pos[] = {
+            "один",
+            "два",
+            "три",
+            "четыре",
+            "пять",
+            "шесть",
+            "семь",
+            "восемь",
+            "девять",
+        };
+
+        cout << first_pos[first_digit-1];
+            cout << " ";
+        if (second_digit == 1) {
+            cout << sub_second_pos[third_digit-1];
+            cout << " ";
+        }
+        else { 
+            cout << second_pos[second_digit-2]; 
+            cout << " ";
+            }
+
+        if (third_digit != 0 && second_digit != 1) {
+            cout << third_pos[third_digit-1];
+        }
+        cout << endl;
         break;
     }
 
