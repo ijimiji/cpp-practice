@@ -118,6 +118,10 @@ int main() {
             cout << "Error. Not valid input for int number." << endl;
             break;
         }
+        if (number > 999 && number < 100) {
+            cout << "Number should be in [100, 999]." << endl;
+            break;
+        }
 
         // From the beginning to the end 
         // For example 123
@@ -170,21 +174,78 @@ int main() {
             "девять",
         };
 
-        cout << first_pos[first_digit-1];
-            cout << " ";
+        cout << first_pos[first_digit - 1];
+        cout << " ";
         if (second_digit == 1) {
-            cout << sub_second_pos[third_digit-1];
+            cout << sub_second_pos[third_digit - 1];
             cout << " ";
         }
-        else { 
-            cout << second_pos[second_digit-2]; 
+        else {
+            cout << second_pos[second_digit - 2];
             cout << " ";
-            }
+        }
 
         if (third_digit != 0 && second_digit != 1) {
-            cout << third_pos[third_digit-1];
+            cout << third_pos[third_digit - 1];
         }
         cout << endl;
+        break;
+    }
+    case 4: {
+        string animals[] = {
+            "monkey",
+            "chicken",
+            "dog",
+            "pig",
+            "rat",
+            "bull",
+            "tiger",
+            "rabbit",
+            "dragon",
+            "snake",
+            "horse",
+            "sheep"
+        };
+        string colors[] = {
+            "white",
+            "white",
+            "blue",
+            "blue",
+            "green",
+            "green",
+            "red",
+            "red",
+            "yellow",
+            "yellow"
+        };
+        int year;
+        cout << "Enter a year ";
+        if (!(std::cin >> year)) {
+            cout << "Error. Not valid input for int year." << endl;
+            break;
+        }
+        string animal = animals[year % 12];
+        string color = colors[year % 10];
+        cout << year << " is a year of a ";
+        cout << color << " " << animal << "." << endl;
+        break;
+    }
+    case 5: {
+        int day, month, year;
+        cout << "Enter your date (d m y) ";
+        if (!(std::cin >> day)) {
+            cout << "Error. Not valid input for int day." << endl;
+            break;
+        }
+        if (!(std::cin >> month)) {
+            cout << "Error. Not valid input for int month." << endl;
+            break;
+        }
+        if (!(std::cin >> year)) {
+            cout << "Error. Not valid input for int year." << endl;
+            break;
+        }
+        
         break;
     }
 
