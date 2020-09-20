@@ -14,24 +14,25 @@ int FindDistanceBetweenPoints(T A, M B) {
 }
 
 template <typename T, typename A>
-int CheckIfFirstQuater(T x, A y) {
+int CheckIfFirstQuarter(T x, A y) {
     return (x > 0 && y > 0) ? 1 : 0;
 }
 
 template <typename T, typename A>
-int CheckIfThirdQuater(T x, A y) {
+int CheckIfThirdQuarter(T x, A y) {
     return (x < 0 && y < 0) ? 1 : 0;
 }
 
 int main() {
-    cout << "Enter digit of task you want to check ";
+    cout << "Enter number of task you want to check ";
     int choice;
     if (!(std::cin >> choice)) {
-        cout << "Error. Not vaild input for task digit." << endl;
+        cout << "Error. Not vaild input for task number." << endl;
     }
     switch (choice)
     {
-
+    // Variant 12
+    // Check if point is in I or III quarter
     case 1: {
         double x, y;
         cout << "Enter x ";
@@ -46,7 +47,7 @@ int main() {
             break;
         }
 
-        if (CheckIfFirstQuater(x, y) || CheckIfThirdQuater(x, y)) {
+        if (CheckIfFirstQuarter(x, y) || CheckIfThirdQuarter(x, y)) {
             cout << "x and y are in first or third quater." << endl;
         }
         else {
@@ -54,6 +55,9 @@ int main() {
         }
         break;
     }
+
+    // Check if points lie on the same line
+    // If not calculate P ans S of given triangle
     case 2: {
         double x1, y1;
         double x2, y2;
@@ -90,9 +94,16 @@ int main() {
             break;
         }
 
-        std::vector<double> M = { x1, y1 };
-        std::vector<double> L = { x2, y2 };
-        std::vector<double> H = { x3, y3 };
+        // Use old syntax to improve legacy support
+        std::vector<double> M;  // = { x1, y1 };
+        M.push_back(x1);
+        M.push_back(y1);
+        std::vector<double> L; // = { x2, y2 };
+        L.push_back(x2);
+        L.push_back(y2);
+        std::vector<double> H; // = { x3, y3 };
+        H.push_back(x3);
+        H.push_back(y3);
 
         double d1 = FindDistanceBetweenPoints(M, L);
         double d2 = FindDistanceBetweenPoints(L, H);
@@ -111,6 +122,8 @@ int main() {
         }
         break;
     }
+
+    // Give russian transliteration of a number
     case 3: {
         int number;
         cout << "Enter your number ";
@@ -125,10 +138,11 @@ int main() {
 
         // From the beginning to the end 
         // For example 123
-        int third_digit = number % 10; // 1
+        int third_digit = number % 10;       // 1
         int second_digit = number / 10 % 10; // 2
         int first_digit = number / 100 % 10; // 3
         cout << first_digit << second_digit << third_digit << endl;
+
         string first_pos[] = {
             "сто",
             "двести",
@@ -140,6 +154,8 @@ int main() {
             "восемьсот",
             "девятьсот"
         };
+
+        // Use this array if 2 and 3 part is in [11, 19]
         string sub_second_pos[] = {
             "одиннадцать",
             "двенадцать",
@@ -162,6 +178,7 @@ int main() {
             "восемьдесят",
             "девяносто"
         };
+
         string third_pos[] = {
             "один",
             "два",
@@ -232,7 +249,8 @@ int main() {
     }
     case 5: {
         int day, month, year;
-        cout << "Enter your date (d m y) ";
+
+        cout << "Enter your date (d m y): ";
         if (!(std::cin >> day)) {
             cout << "Error. Not valid input for int day." << endl;
             break;
@@ -245,7 +263,35 @@ int main() {
             cout << "Error. Not valid input for int year." << endl;
             break;
         }
-        
+
+        day++;  // tomorrow
+
+        int days_per_month = 31;
+        if (month == 4 || month == 6 || month == 9 || month == 11) {
+            days_per_month = 30;
+        }
+        else if (month == 2) {
+            days_per_month = 28;
+            if (year % 4 == 0) {
+                days_per_month = 29;
+                if (year % 100 == 0) {
+                    days_per_month = 28;
+                    if (year % 400 == 0) {
+                        days_per_month = 29;
+                    }
+                }
+            }
+        }
+        if (day > days_per_month) {
+            day = 1;
+            month++;
+            if (month > 12) {
+                month = 1;
+                year++;
+            }
+        }
+        cout << "Завтра " << day << ".";
+        cout << month << "." << year << endl;
         break;
     }
 
