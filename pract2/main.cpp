@@ -9,7 +9,7 @@ using std::endl;
 using std::string;
 
 template <typename T, typename M>
-int FindDistanceBetweenPoints(T A, M B) {
+double FindDistanceBetweenPoints(T A, M B) {
     return sqrt(pow(A[0] - B[0], 2) + pow(A[1] - B[1], 2));
 }
 
@@ -31,8 +31,8 @@ int main() {
     }
     switch (choice)
     {
-    // Variant 12
-    // Check if point is in I or III quarter
+        // Variant 12
+        // Check if point is in I or III quarter
     case 1: {
         double x, y;
         cout << "Enter x ";
@@ -47,15 +47,21 @@ int main() {
             break;
         }
 
-        if (CheckIfFirstQuarter(x, y) || CheckIfThirdQuarter(x, y)) {
-            cout << "x and y are in first or third quater." << endl;
-        }
-        else {
-            cout << "x and y are not in first nor third quater." << endl;
+        if (!(x == 0.0 && y == 0.0)) {
+            if (CheckIfFirstQuarter(x, y) || CheckIfThirdQuarter(x, y)) {
+                cout << "x and y are in first or third quater." << endl;
+            }
+            else {
+                cout << "x and y are not in first nor third quater." << endl;
+            }
+            break;
+        } else {
+                cout << "x and y are the center of coordinate plane." << endl;
         }
         break;
     }
 
+    
     // Check if points lie on the same line
     // If not calculate P ans S of given triangle
     case 2: {
@@ -122,8 +128,7 @@ int main() {
         }
         break;
     }
-
-    // Give russian transliteration of a number
+          // Give russian transliteration of a number
     case 3: {
         int number;
         cout << "Enter your number ";
@@ -208,6 +213,7 @@ int main() {
         cout << endl;
         break;
     }
+          // Eastern calendar
     case 4: {
         string animals[] = {
             "monkey",
@@ -247,6 +253,7 @@ int main() {
         cout << color << " " << animal << "." << endl;
         break;
     }
+          // Tomorrow date
     case 5: {
         int day, month, year;
 
@@ -264,7 +271,7 @@ int main() {
             break;
         }
 
-        day++;  // tomorrow
+        day++;
 
         int days_per_month = 31;
         if (month == 4 || month == 6 || month == 9 || month == 11) {
@@ -294,11 +301,11 @@ int main() {
         cout << month << "." << year << endl;
         break;
     }
-
-    default:
+    default: {
         cout << "No such task is present." << endl;
         break;
     }
+}
 
-    return 0;
+return 0;
 }
