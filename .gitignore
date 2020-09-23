@@ -1,1 +1,5 @@
-main
+.vscode/launch.json
+.vscode/settings.json
+.vscode/tasks.json
+pract2/main
+pract2/a.out
