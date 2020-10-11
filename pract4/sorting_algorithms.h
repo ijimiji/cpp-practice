@@ -1,44 +1,72 @@
+#include <iostream>
 #include <vector>
+#include <chrono>
+
+using namespace std::chrono;
 
 void selectionSort(std::vector<int> arr, int n) {
     int swaps = 0, compares = 0;
     int i, j, min_idx;
     int temp;
-    // One by one move boundary of unsorted subarray
+
+    auto start = system_clock::now();
     for (i = 0; i < n - 1; i++) {
-        // Find the minimum element in unsorted array
+
         min_idx = i;
-        for (j = i + 1; j < n; j++)
+        for (j = i + 1; j < n; j++) {
+            ++compares;
             if (arr[j] < arr[min_idx])
                 min_idx = j;
+        }
 
-        // Swap the found minimum element with the first element
+        ++swaps;
         temp = arr[min_idx];
         arr[min_idx] = arr[i];
         arr[i] = temp;
     }
+    auto end = system_clock::now();
+
+    auto elapsed_seconds = duration_cast<seconds>(end - start).count();
+    auto elapsed_milliseconds = duration_cast<milliseconds>(end - start).count();
+    std::cout << "Selection sort on " << n << " elements took:" << std::endl;
+    std::cout << compares << " compares" << std::endl;
+    std::cout << swaps << " swaps" << std::endl;
+    std::cout << elapsed_seconds << "s" << std::endl;
+    std::cout << elapsed_milliseconds << "ms" << std::endl;
 }
 
 void bubbleSort(std::vector<int> arr, int n) {
-
     int swaps = 0, compares = 0;
     int i, j;
     int temp;
+    auto start = system_clock::now();
     for (i = 0; i < n - 1; i++)
 
-        // Last i elements are already in place
-        for (j = 0; j < n - i - 1; j++)
+        for (j = 0; j < n - i - 1; j++) {
+            ++compares;
             if (arr[j] > arr[j + 1]) {
+                ++swaps;
                 temp = arr[j];
                 arr[j] = arr[j + 1];
                 arr[j + 1] = temp;
             }
+        }
+    auto end = system_clock::now();
+
+    auto elapsed_seconds = duration_cast<seconds>(end - start).count();
+    auto elapsed_milliseconds = duration_cast<milliseconds>(end - start).count();
+    std::cout << "Bubble sort on " << n << " elements took:" << std::endl;
+    std::cout << compares << " compares" << std::endl;
+    std::cout << swaps << " swaps" << std::endl;
+    std::cout << elapsed_seconds << "s" << std::endl;
+    std::cout << elapsed_milliseconds << "ms" << std::endl;
 }
 
 void insertionSort(std::vector<int> arr, int n) {
 
     int swaps = 0, compares = 0;
     int i, key, j;
+    auto start = system_clock::now();
     for (i = 1; i < n; i++) {
         key = arr[i];
         j = i - 1;
@@ -46,38 +74,50 @@ void insertionSort(std::vector<int> arr, int n) {
         /* Move elements of arr[0..i-1], that are
         greater than key, to one position ahead
         of their current position */
-        while (j >= 0 && arr[j] > key) {
+        while (j >= 0 && arr[j] > key && ++compares) {
+            ++swaps;
             arr[j + 1] = arr[j];
             j = j - 1;
         }
+        ++swaps;
         arr[j + 1] = key;
     }
+    auto end = system_clock::now();
+
+    auto elapsed_seconds = duration_cast<seconds>(end - start).count();
+    auto elapsed_milliseconds = duration_cast<milliseconds>(end - start).count();
+    std::cout << "Insertion sort on " << n << " elements took:" << std::endl;
+    std::cout << compares << " compares" << std::endl;
+    std::cout << swaps << " swaps" << std::endl;
+    std::cout << elapsed_seconds << "s" << std::endl;
+    std::cout << elapsed_milliseconds << "ms" << std::endl;
 }
 
 void shellSort(std::vector<int> arr, int n) {
 
     int swaps = 0, compares = 0;
-    // Start with a big gap, then reduce the gap
-    for (int gap = n / 2; gap > 0; gap /= 2) {
-        // Do a gapped insertion sort for this gap size.
-        // The first gap elements a[0..gap-1] are already in gapped order
-        // keep adding one more element until the entire array is
-        // gap sorted
-        for (int i = gap; i < n; i += 1) {
-            // add a[i] to the elements that have been gap sorted
-            // save a[i] in temp and make a hole at position i
-            int temp = arr[i];
 
-            // shift earlier gap-sorted elements up until the correct
-            // location for a[i] is found
-            int j;
-            for (j = i; j >= gap && arr[j - gap] > temp; j -= gap)
-                arr[j] = arr[j - gap];
+    int step, i, j, tmp;
 
-            //  put temp (the original a[i]) in its correct location
-            arr[j] = temp;
-        }
-    }
+    auto start = system_clock::now();
+    for (step = n / 2; step > 0; step /= 2)
+        for (i = step; i < n; i++)
+            for (j = i - step; j >= 0 && arr[j] > arr[j + step] && ++compares;
+                 j -= step) {
+                ++swaps;
+                tmp = arr[j];
+                arr[j] = arr[j + step];
+                arr[j + step] = tmp;
+            }
+    auto end = system_clock::now();
+
+    auto elapsed_seconds = duration_cast<seconds>(end - start).count();
+    auto elapsed_milliseconds = duration_cast<milliseconds>(end - start).count();
+    std::cout << "Shell sort on " << n << " elements took:" << std::endl;
+    std::cout << compares << " compares" << std::endl;
+    std::cout << swaps << " swaps" << std::endl;
+    std::cout << elapsed_seconds << "s" << std::endl;
+    std::cout << elapsed_milliseconds << "ms" << std::endl;
 }
 
 void cocktailSort(std::vector<int> a, int n) {
@@ -88,49 +128,49 @@ void cocktailSort(std::vector<int> a, int n) {
     int temp;
     int end = n - 1;
 
+    auto start_t = system_clock::now();
     while (swapped) {
-        // reset the swapped flag on entering
-        // the loop, because it might be true from
-        // a previous iteration.
+
         swapped = false;
 
-        // loop from left to right same as
-        // the bubble sort
         for (int i = start; i < end; ++i) {
+            ++compares;
             if (a[i] > a[i + 1]) {
                 temp = a[i];
                 a[i] = a[i + 1];
                 a[i + 1] = temp;
                 swapped = true;
+                ++swaps;
             }
         }
 
-        // if nothing moved, then array is sorted.
         if (!swapped)
             break;
 
-        // otherwise, reset the swapped flag so that it
-        // can be used in the next stage
         swapped = false;
 
-        // move the end point back by one, because
-        // item at the end is in its rightful spot
         --end;
 
-        // from right to left, doing the
-        // same comparison as in the previous stage
         for (int i = end - 1; i >= start; --i) {
             if (a[i] > a[i + 1]) {
+                ++compares;
                 temp = a[i];
                 a[i] = a[i + 1];
                 a[i + 1] = temp;
                 swapped = true;
+                ++swaps;
             }
         }
 
-        // increase the starting point, because
-        // the last stage would have moved the next
-        // smallest number to its rightful spot.
         ++start;
     }
+    auto end_t = system_clock::now();
+
+    auto elapsed_seconds = duration_cast<seconds>(end_t - start_t).count();
+    auto elapsed_milliseconds = duration_cast<milliseconds>(end_t - start_t).count();
+    std::cout << "Cocktail sort on " << n << " elements took:" << std::endl;
+    std::cout << compares << " compares" << std::endl;
+    std::cout << swaps << " swaps" << std::endl;
+    std::cout << elapsed_seconds << "s" << std::endl;
+    std::cout << elapsed_milliseconds << "ms" << std::endl;
 }
